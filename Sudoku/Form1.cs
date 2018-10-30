@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Sudoku
+namespace OpenSudoku
 {
     public partial class Form1 : Form
     {
@@ -16,7 +16,7 @@ namespace Sudoku
 
         public void Draw()
         {
-            richTextBoxTask.Text = board.ToString();
+            richTextBoxTask.Text = board.SolutionToString(PrintType.StatisCiphers);
             richTextBoxSolution.Text = board.SolutionToString(PrintType.InvalidCiphersCount);
         }
 
@@ -26,11 +26,11 @@ namespace Sudoku
             //if (board.SetUpperLeftCornerValue())
             {
                 Draw();
-                toolStripStatusLabel1.Text = "Det lykkedes";
+                toolStripStatusLabel1.Text = "Success";
             }
             else
             {
-                toolStripStatusLabel1.Text = "Det lykkedes ikke";
+                toolStripStatusLabel1.Text = "Failed";
             }
             button1.Enabled = !board.OneSolution();
         }

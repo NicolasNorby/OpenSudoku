@@ -1,0 +1,17 @@
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\bin\Debug\OpenSudokuTests.dll
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\bin\Debug\OpenSudokuTests.pdb
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\bin\Debug\Sudoku.exe
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\bin\Debug\Sudoku.pdb
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\bin\Debug\Sudoku.exe.config
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\obj\Debug\OpenSudokuTests.csprojAssemblyReference.cache
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\obj\Debug\OpenSudokuTests.csproj.CoreCompileInputs.cache
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\obj\Debug\OpenSudokuTests.csproj.CopyComplete
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\obj\Debug\OpenSudokuTests.dll
+C:\Users\nn\Documents\GitHub\OpenSudoku\OpenSudokuTests\obj\Debug\OpenSudokuTests.pdb

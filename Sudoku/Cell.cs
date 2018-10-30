@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Sudoku
+namespace OpenSudoku
 {
     public class Cell
     {

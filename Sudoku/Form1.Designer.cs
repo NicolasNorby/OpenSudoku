@@ -1,4 +1,4 @@
-﻿namespace Sudoku
+﻿namespace OpenSudoku
 {
     partial class Form1
     {

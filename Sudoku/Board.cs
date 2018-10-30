@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Sudoku
+namespace OpenSudoku
 {
     public enum PrintType { StatisCiphers, InvalidCiphers, ValidCiphers, InvalidCiphersCount, ValidCiphersCount}
     public class Board
     {
 
-        public Cell[,] fields;
+        public Cell[,] cells;
 
         public bool SetRandomStaticValue()
         {
@@ -30,7 +30,7 @@ namespace Sudoku
 
         public Board()
         {
-            fields = new Cell[9,9];
+            cells= new Cell[9,9];
             int rowIndex = 0;
             int columnIndex = 0;
             while (columnIndex < 9)
@@ -38,7 +38,7 @@ namespace Sudoku
                 rowIndex = 0;
                 while (rowIndex < 9)
                 {
-                    fields[rowIndex, columnIndex] = new Cell();
+                    cells[rowIndex, columnIndex] = new Cell();
                     rowIndex++;
                 }
                 columnIndex++;
@@ -55,7 +55,7 @@ namespace Sudoku
                 rowIndex = 0;
                 while (rowIndex < 9 && b)
                 {
-                    b = (fields[rowIndex, columnIndex].GetNumberOfCiphers(true) == 1);
+                    b = (cells[rowIndex, columnIndex].GetNumberOfCiphers(true) == 1);
                     rowIndex++;
                 }
                 columnIndex++;
@@ -66,12 +66,27 @@ namespace Sudoku
         public bool SetCellCipher(int rowIndex, int columnIndex, int cipher, bool stat)
         {
             bool succes = false;
-            if (fields[rowIndex, columnIndex].SetCipher(cipher, stat))
+            if (cells[rowIndex, columnIndex].SetCipher(cipher, stat))
             {
                 InvalidateCipherInRow(rowIndex, cipher);
                 InvalidateCipherInColumn(columnIndex, cipher);
                 InvalidateCipherInSquare(rowIndex, columnIndex, cipher);
-                SetCipherLocationsInRow(rowIndex);
+
+                int columnCursor = 0;
+                while (columnCursor < 9)
+                {
+                    int cipherCursor = 1;
+                    while (cipherCursor <= 9)
+                    {
+                        int uniqueRowIndex = GetUniqueRowForCipher(columnCursor, cipherCursor);
+                        if (uniqueRowIndex>=0 && cells[uniqueRowIndex, columnCursor].GetNumberOfCiphers(true)> 1)
+                        {
+                            SetCellCipher(uniqueRowIndex, columnCursor, cipher, false);
+                        }
+                        cipherCursor++;
+                    }
+                    columnCursor++;
+                }
                 succes = true;
             }
             return (succes);
@@ -82,7 +97,7 @@ namespace Sudoku
             int columnIndex = 0;
             while (columnIndex < 9)
             {
-                fields[rowIndex, columnIndex].InvalidateValue(cipher);
+                cells[rowIndex, columnIndex].InvalidateValue(cipher);
                 columnIndex++;
             }
         }
@@ -92,7 +107,7 @@ namespace Sudoku
             int rowIndex = 0;
             while (rowIndex < 9)
             {
-                fields[rowIndex, columnIndex].InvalidateValue(cipher);
+                cells[rowIndex, columnIndex].InvalidateValue(cipher);
                 rowIndex++;
             }
         }
@@ -107,7 +122,7 @@ namespace Sudoku
             {
                 while (squareColumnIndex < nextSquareColumnIndex)
                 {
-                    fields[squareRowIndex, squareColumnIndex].InvalidateValue(cipher);
+                    cells[squareRowIndex, squareColumnIndex].InvalidateValue(cipher);
                     squareColumnIndex++;
                 }
                 squareColumnIndex = squareColumnIndex - 3;
@@ -115,56 +130,34 @@ namespace Sudoku
             }
         }
 
-        public void SetCipherLocationsInRow(int rowIndex)
+        public int GetUniqueRowForCipher(int columnIndex, int cipher) // Returns -1 if not unique
         {
-            int cipher = 1;
-            while (cipher < 10)
-            {
-                int uniqueColumnIndex = 0;
-                if ((GetUniqueColumnForCipher(rowIndex, cipher, ref uniqueColumnIndex) ) &&  (fields[rowIndex, uniqueColumnIndex].GetNumberOfCiphers(true) > 1))
-                    {
-                        SetCellCipher(rowIndex, uniqueColumnIndex, cipher, false);
-                        cipher = 1;
-                    }
-                else { cipher++; }
-            }
-        }
-
-        public bool GetUniqueColumnForCipher(int rowIndex, int cipher, ref int uniqueColumnIndex)
-        {
-            int columnCount = 0;
-            int columnIndex = 0;
-            while (columnIndex < 9)
-            {
-                if (fields[rowIndex, columnIndex].ciphers[cipher - 1])
-                {
-                    uniqueColumnIndex = columnIndex;
-                    columnCount++;
-                }
-                columnIndex++;
-            }
-            return (columnCount==1);
-        }
-
-        public override string ToString()
-        {
-            string s = "";
+            // Count occurrances of cipher in column
             int rowIndex = 0;
-            int columnIndex = 0;
-            while (columnIndex < 9)
+            int uniqueRowIndex = -1;
+            while (rowIndex < 9)
             {
-                rowIndex = 0;
-                while (rowIndex < 9)
+                if (cells[rowIndex, columnIndex].ciphers[cipher - 1]) // Cipher is valid in row
                 {
-                    if (fields[rowIndex, columnIndex].isStatic) { s += "|" + fields[rowIndex, columnIndex].GetFirstValidNumber().ToString() + "|"; }
-                    else { s += "| |"; }
+                    if (uniqueRowIndex == -1) // Is it the first occurrance
+                    {
+                        uniqueRowIndex = rowIndex;
+                        rowIndex++;
+                    }
+                    else // It is not the first occurrance so set to -1 and abort
+                    {
+                        uniqueRowIndex = -1;
+                        rowIndex = 9;
+                    }
+                }
+                else
+                {
                     rowIndex++;
                 }
-                if (columnIndex < 9 - 1) { s += System.Environment.NewLine; }
-                columnIndex++;
             }
-            return (s);
+            return (uniqueRowIndex);
         }
+
 
         public string SolutionToString(PrintType printType)
         {
@@ -176,21 +169,34 @@ namespace Sudoku
                 rowIndex = 0;
                 while (rowIndex < 9)
                 {
+                    if (rowIndex == 0) { s += "|"; }
                     switch(printType)
                     {
+                        case PrintType.StatisCiphers:
+                            {
+                                if (cells[rowIndex, columnIndex].GetNumberOfCiphers(true)==1)
+                                {
+                                    if (cells[rowIndex, columnIndex].isStatic) { s += "*"; }
+                                    else { s += " "; }
+                                    s += (cells[rowIndex, columnIndex].GetFirstValidNumber()).ToString();
+                                }
+                                else { s += "  "; }
+                                s += "|";
+                                break;
+                            }
                         case PrintType.InvalidCiphers:
                             {
-                                s += "|" + IntArrayToString(fields[rowIndex, columnIndex].GetNumbers(false)) + "|";
+                                s += IntArrayToString(cells[rowIndex, columnIndex].GetNumbers(false)) + "|";
                                 break;
                             }
                         case PrintType.ValidCiphers:
                             {
-                                s += "|" + IntArrayToString(fields[rowIndex, columnIndex].GetNumbers(true)) + "|";
+                                s += IntArrayToString(cells[rowIndex, columnIndex].GetNumbers(true)) + "|";
                                 break;
                             }
                         case PrintType.InvalidCiphersCount:
                             {
-                                s += "|" + fields[rowIndex, columnIndex].GetNumberOfCiphers(false) + "|";
+                                s += cells[rowIndex, columnIndex].GetNumberOfCiphers(false) + "|";
                                 break;
                             }
 
