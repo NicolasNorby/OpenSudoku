@@ -46,14 +46,14 @@ namespace OpenSudoku
             if (!isStatic && GetNumberOfCiphers(true)>1) { ciphers[value - 1] = false; }
         }
 
-        public bool SetCipher(int value, bool stat)
+        public bool SetCipher(int value, bool isStatic)
         {
             bool isValid = ciphers[value - 1];
             if (isValid)
             {
-                isStatic = stat;
+                this.isStatic = isStatic;
                 int i = 0;
-                while (i < ciphers.Count())
+                while (i < 9)
                 {
                     ciphers[i] = (i == (value - 1));
                     i++;

@@ -8,3 +8,4 @@ C:\Users\nn\Documents\GitHub\OpenSudoku\Sudoku\obj\Debug\OpenSudoku.csproj.CoreC
 C:\Users\nn\Documents\GitHub\OpenSudoku\Sudoku\obj\Debug\Sudoku.exe
 C:\Users\nn\Documents\GitHub\OpenSudoku\Sudoku\obj\Debug\Sudoku.pdb
 C:\Users\nn\Documents\GitHub\OpenSudoku\Sudoku\obj\Debug\OpenSudoku.Form1.resources
+C:\Users\nn\Documents\GitHub\OpenSudoku\Sudoku\obj\Debug\OpenSudoku.Form2.resources

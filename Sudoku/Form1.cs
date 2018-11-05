@@ -18,6 +18,7 @@ namespace OpenSudoku
         {
             richTextBoxTask.Text = board.SolutionToString(PrintType.StatisCiphers);
             richTextBoxSolution.Text = board.SolutionToString(PrintType.InvalidCiphersCount);
+            richTextBox1.Text = board.SolutionToString(PrintType.ValidCiphers);
         }
 
         private void Button1_Click(object sender, EventArgs e)
